@@ -1,0 +1,1 @@
+function importFromMAVLink(obj)

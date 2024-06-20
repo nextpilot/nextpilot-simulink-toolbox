@@ -1,0 +1,1 @@
+function e = exp(q)
