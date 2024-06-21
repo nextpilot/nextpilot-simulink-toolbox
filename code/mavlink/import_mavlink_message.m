@@ -1,5 +1,13 @@
-function readmavlink
-tree =xmlread('E:\repository\mavlink\c_library_v2\message_definitions\common.xml');
+function import_mavlink_message(xml_file, save_file)
+
+
+if isfile(xml_file)
+
+end
+
+
+
+tree =xmlread(xml_file);
 
 mavlink.version=char(tree.getElementsByTagName('version').item(0).getTextContent);
 mavlink.dialect=char(tree.getElementsByTagName('dialect').item(0).getTextContent);
