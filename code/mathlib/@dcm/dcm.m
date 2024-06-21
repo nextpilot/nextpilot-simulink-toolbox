@@ -1,11 +1,18 @@
-classdef dcm
+classdef dcm 
     properties
-        value
+        value = eye(3);
     end
-
+    
     methods
-        function dcm()
-
+        function obj=dcm(varargin)
+            
+            % dcm()
+            % dcm(r)
+            % dcm()
+            
+            obj.value=ang2dcm(varargin{:});
         end
+        
+     
     end
 end
