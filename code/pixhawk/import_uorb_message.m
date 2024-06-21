@@ -15,7 +15,7 @@ function varargout = import_uorb_message(msg_files, save_files)
 
 
 
-%% msg_define_file参数处理
+%% 参数处理
 if isempty(msg_files)
     [filename, pathname] = uigetfile({'*.msg', 'uORB Msg Files (*.msg)'},'uORB Msg Files');
     if isequal(pathname, 0)
@@ -32,15 +32,18 @@ elseif isstring(msg_files)
     msg_files = cellstr(msg_files);
 end
 
-%% 读写文件
+%% 读取文件
 msg_vars_list.bus ={};
 msg_vars_list.enum={};
+idx = 0;
+
 for i=1:length(msg_files)
-    fprintf('[%d/%d] %s\n',i,length(msg_files),msg_files{i});
+    % fprintf('[%d/%d] %s\n',i,length(msg_files),msg_files{i});
     list = dir(msg_files{i});
     for j = 1:length(list)
+        idx = idx + 1;
         file = fullfile(list(j).folder,list(j).name);
-        fprintf('\t%s\n',file);
+        fprintf('[%d]%s\n',idx, file);
 
         [~,~,exts] = fileparts(file);
         % elem = [name, type, size, desc]
@@ -88,6 +91,7 @@ while ~feof(fid)
         continue
     elseif startsWith(tline, '# TOPICS')
         bus.name = strsplit(strtrim(strrep(tline, '# TOPICS','')));
+        continue;
     elseif startsWith(tline ,'#')
         continue;
     end
@@ -125,6 +129,7 @@ function [elem, enum] = read_msg_header(file)
 bus.file = file;  bus.name={name};  bus.elem = [];
 enum.file = file; enum.name={name}; enum.elem =[];
 
+% 打开文件
 fid=fopen(file);
 fskip(fid, 'struct __EXPORT');
 fskip(fid, 3);
@@ -165,11 +170,11 @@ while ~feof(fid)
     enum.elem(end).value=tokens{3};
     enum.elem(end).comment='';
 end
+% 关闭文件
 fclose(fid);
 
-%%
-function savetobase(ws, list)
 
+function savetobase(ws, list)
 for i = 1:length(list.bus)
     bus = list.bus{i};
     if isempty(bus)
@@ -177,7 +182,6 @@ for i = 1:length(list.bus)
     end
 
     bobj = Simulink.Bus;
-    %elem = [{'timestamp','fixdt(0,64,0)',1,''};elem];
     clear eobj;
     for j=1:length(bus.elem)
         eobj(j)             = Simulink.BusElement;
@@ -187,6 +191,7 @@ for i = 1:length(list.bus)
         eobj(j).Description = bus.elem(j).comment;
     end
     bobj.Elements = eobj;
+
     for k=1:length(bus.name)
         assignin(ws,[bus.name{k},'_s'],bobj);
     end
@@ -222,8 +227,9 @@ for i = 1:length(list.bus)
         continue;
     end
 
-    clear eobj
     bobj = Simulink.Bus;
+    clear eobj
+
     for j=1:length(bus.elem)
         eobj(j)=Simulink.BusElement;
         eobj(j).Name = bus.elem(j).name;
@@ -232,6 +238,7 @@ for i = 1:length(list.bus)
         eobj(j).Description = bus.elem(j).comment;
     end
     bobj.Elements = eobj;
+    
     for k =1:length(bus.name)
         assignin(sobj,[bus.name{k},'_s'],bobj);
     end
@@ -244,6 +251,7 @@ for i = 1:length( list.enum)
         continue;
     end
 
+    % 将枚举项定义为参数
     p = Simulink.Parameter();
     p.CoderInfo.StorageClass       = 'Custom';
     p.CoderInfo.CustomStorageClass = 'Const';
@@ -252,8 +260,9 @@ for i = 1:length( list.enum)
     nobj = Simulink.data.dictionary.EnumTypeDefinition;
     nobj.AddClassNameToEnumNames = true;
     for j=1:length(enum.elem)
+        % 增加枚举项
         appendEnumeral(nobj,enum.elem(j).name,enum.elem(j).value, enum.elem(j).comment);
-        %
+        % 保存为参数
         p.Value=[];
         set(p,{'DataType','Value','Description'},{getdatatype(enum.elem(j).type), enum.elem(j).value, enum.elem(j).comment});
         assignin(sobj, upper(enum.elem(j).name), p);
@@ -262,9 +271,6 @@ for i = 1:length( list.enum)
     assignin(sobj,name,nobj);
 end
 
-%
+% 保存sldd文件
 saveChanges(dobj);
 close(dobj);
-
-
-
