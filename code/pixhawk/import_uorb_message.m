@@ -76,6 +76,7 @@ end
 
 function [bus, enum] = read_msg_define(file)
 [~,name]=fileparts(file);
+name = camel2under(name);
 bus.file = file;  bus.name={name};  bus.elem = [];
 enum.file = file; enum.name={name}; enum.elem =[];
 
@@ -187,7 +188,7 @@ for i = 1:length(list.bus)
     end
     bobj.Elements = eobj;
     for k=1:length(bus.name)
-        assignin(ws,bus.name{k},bobj);
+        assignin(ws,[bus.name{k},'_s'],bobj);
     end
 end
 
@@ -232,7 +233,7 @@ for i = 1:length(list.bus)
     end
     bobj.Elements = eobj;
     for k =1:length(bus.name)
-        assignin(sobj,bus.name{k},bobj);
+        assignin(sobj,[bus.name{k},'_s'],bobj);
     end
 end
 
