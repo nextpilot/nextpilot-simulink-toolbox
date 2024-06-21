@@ -41,7 +41,7 @@ switch lower(oldtype)
     case {'int'}
         mltype = 'int32';
     case {'bool', 'boolean', 'logcial'}
-        mltype = 'logical';
+        mltype = 'boolean';
     otherwise
         mltype = oldtype;
 end
