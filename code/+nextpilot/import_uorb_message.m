@@ -1,8 +1,8 @@
-function varargout = import_uorb_message(msg_files, save_files)
+function varargout = import_uorb_message(varargin)
 % import_uorb_message(msg_define_file, msg_save_file)
 %
 % msg_files:  uorb消息文件，支持cellstr，char，string，string array等，字符串中可以有通配符
-% save_files: 结果保存文件，支持sldd，xlsx文件格式
+% save_file: 结构体和枚举类型保存文件，支持sldd，xlsx文件格式
 %
 % Examples
 %
@@ -14,8 +14,13 @@ function varargout = import_uorb_message(msg_files, save_files)
 % 采用 Simulink.importExternalCTypes 函数能转换常规 C/C++ 数据类
 
 
-
 %% 参数处理
+args = inputParser;
+addOptional(args, 'uorb_msg_files','');
+addOptional(args, 'uorb_save_file','base',@isstring);
+parse(args, varargin{:})
+
+msg_files = args.Results.uorb_msg_files;
 if isempty(msg_files)
     [filename, pathname] = uigetfile({'*.msg', 'uORB Msg Files (*.msg)'},'uORB Msg Files');
     if isequal(pathname, 0)

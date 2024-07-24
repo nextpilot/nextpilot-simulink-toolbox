@@ -1,21 +1,32 @@
-function import_mavlink_message(xml_file, save_file)
+function import_mavlink_message(varargin)
 
 
-if isfile(xml_file)
+%% 参数处理
+args = inputParser;
+addOptional(args, 'mavlink_xml_file','', @isstring);
+addOptional(args, 'uorb_save_file','base',@isstring);
+parse(args, varargin{:})
 
+mavlink_xml_file = args.Results.mavlink_xml_file;
+if isempty(mavlink_xml_file)
+        [filename, pathname] = uigetfile({'*.xml', 'MavLink Msg Files (*.xml)'},'uORB Msg Files');
+    if isequal(pathname, 0)
+        return;
+    else
+        mavlink_xml_file = fullfile(pathname, filename);
+    end
 end
 
+%% 读取文件
+tree = xmlread(mavlink_xml_file);
 
-
-tree =xmlread(xml_file);
-
-mavlink.version=char(tree.getElementsByTagName('version').item(0).getTextContent);
-mavlink.dialect=char(tree.getElementsByTagName('dialect').item(0).getTextContent);
+mavlink.version = char(tree.getElementsByTagName('version').item(0).getTextContent);
+mavlink.dialect = char(tree.getElementsByTagName('dialect').item(0).getTextContent);
 
 % 处理枚举类型
 enum_root = tree.getElementsByTagName('enums');
 enum_list = enum_root.item(0).getChildNodes;
-for i = 0 : enum_list.getLength-1
+for i = 0 : enum_list.getLength - 1
     enum_node = enum_list.item(i);
     if isempty(enum_node)
         continue

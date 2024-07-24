@@ -1,4 +1,4 @@
-function excel2busobject(xlsx,sldd,varargin)
+function import_from_excel(xlsx, sldd, varargin)
 
 %% 输入参数处理
 if nargin == 0

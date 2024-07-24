@@ -1,1 +1,1 @@
-function importFromMAVLink(obj)
+function importFromMAVLink()

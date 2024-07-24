@@ -1,4 +1,4 @@
-function [value, name] = cell2enum(c)
+function [value, name] = cell_to_object(c)
 
 value = {};
 name ={};

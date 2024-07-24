@@ -1,4 +1,4 @@
-function [buses,names] = struct2bus(value,varargin)
+function [buses,names] = struct_to_object(value,varargin)
 % struct2busobject(value, file, group, buses, names)
 
 %% 输入参数处理
