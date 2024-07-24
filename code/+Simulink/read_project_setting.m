@@ -10,22 +10,22 @@ end
 
 [pathstr,filestr] = fileparts(which(xlsx));
 
-% ×ÜÊı¾İ×Öµä
+% æ€»æ•°æ®å­—å…¸
 sldd = fullfile(pathstr, [filestr, '.sldd']);
 if ~exist(sldd, 'file')
     Simulink.data.dictionary.create(sldd);
 end
 
-% Êı¾İÀàĞÍ
+% æ•°æ®ç±»å‹
 sldd = fullfile(pathstr, [filestr, '_dtype.sldd']);
 nextpilot.simulink.read_excel_enum(xlsx, sldd);
 nextpilot.simulink.read_excel_struct(xlsx, sldd);
 
-% ²ÎÊı¶¨Òå
+% å‚æ•°å®šä¹‰
 sldd = fullfile(pathstr, [filestr, '_param.sldd']);
 nextpilot.simulink.read_excel_param(xlsx, sldd);
 
-% ĞÅºÅ¶¨Òå
+% ä¿¡å·å®šä¹‰
 % sldd = fullfile(pathstr, [filestr, '_signal.sldd']);
 %nextpilot.simulink.read_excel_param(xlsx, sldd);
 

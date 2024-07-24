@@ -1,6 +1,6 @@
 function excel2busobject(xlsx,sldd,varargin)
 
-%% ÊäÈë²ÎÊı´¦Àí
+%% è¾“å…¥å‚æ•°å¤„ç†
 if nargin == 0
     [filename, pathname] = uigetfile({'*.xls;*.xlsx', 'Excel Files (*.xls,*xlsx)'},'Excel Files');
     if isequal(pathname, 0)
@@ -15,8 +15,8 @@ elseif nargin == 1
     sldd = fullfile(pathname, [filename,'.sldd']);
 end
 
-%% ¶ÁÈ¡excelÎÄ¼ş
-% ÉèÖÃsheetÊôĞÔ
+%% è¯»å–excelæ–‡ä»¶
+% è®¾ç½®sheetå±æ€§
 % opts = detectImportOptions(file,'Sheet','struct');
 opts = matlab.io.spreadsheet.SpreadsheetImportOptions;
 opts.Sheet              = 'struct';
@@ -30,26 +30,26 @@ settings = {
     };
 opts.VariableNames               = settings(1,:);
 opts.VariableTypes               = settings(2,:);
-% Ò²¿ÉÒÔÊ¹ÓÃsetvaropts
+% ä¹Ÿå¯ä»¥ä½¿ç”¨setvaropts
 [opts.VariableOptions.FillValue] = settings{3,:};
 
-% ¶ÁÈ¡excelÄÚÈİĞ´Èësldd
+% è¯»å–excelå†…å®¹å†™å…¥sldd
 t = readtable(xlsx,opts);
 
-% É¾³ı¿ÕĞĞºÍ×¢ÊÍĞĞ
+% åˆ é™¤ç©ºè¡Œå’Œæ³¨é‡Šè¡Œ
 for i = size(t,1):-1:1
     if isempty(t.Name{i}) || t.Name{i}(1)=='#'
         t(i,:)=[];
     end
 end
 
-% ´´½¨½á¹¹Ìå
+% åˆ›å»ºç»“æ„ä½“
 for i=1:size(t,1)
     cmd = ['s.', t.Name{i}, '= t(i,:);'];
     eval(cmd);
 end
 
-%% ½«½á¹¹Ìå×ªÎªbus¶ÔÏó
+%% å°†ç»“æ„ä½“è½¬ä¸ºbuså¯¹è±¡
 field= fieldnames(s);
 for i = 1:length(field)
     nextpilot.simulink.struct2busobject(s.(field{i}), sldd, field{i});

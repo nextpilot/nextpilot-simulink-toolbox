@@ -43,7 +43,7 @@ fid = fopen(sdlog);
 while ~feof(fid)
     [data, count] = fread(fid,BLOCK_SIZE,'*uint8');
     buffer = [buffer, data];
-    % 寻找帧头
+    % 瀵绘壘甯уご
     ptr = 1;
     is_head_found = false;
     while get_bytes_left > 2
@@ -55,7 +55,7 @@ while ~feof(fid)
             continue
         end
     end
-    % 解析数据
+    % 瑙ｆ瀽鏁版嵁
     ptr = ptr + 1;
     msg_type = buffer[ptr];
     if msg_type == MSG_TYPE_FORMAT

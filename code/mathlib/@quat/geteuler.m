@@ -3,9 +3,9 @@ if nargin == 1
     s = 'zyx';
 end
 
-% 调用MATLAB自带的函数，
-%(1)航空航天工具箱quat2angle
-%(2)机器人工具箱quat2eul
+% 璋冪敤MATLAB鑷甫鐨勫嚱鏁帮紝
+%(1)鑸┖鑸ぉ宸ュ叿绠眖uat2angle
+%(2)鏈哄櫒浜哄伐鍏风quat2eul
 q = col(q);
 [r1, r2, r3] = quat2angle(q, s);
 

@@ -1,5 +1,5 @@
 function varargout = readparam(param_define_file, param_saved_file, param_csc_type)
-% ssld/base/matÎÄ¼şÖ§³ÖµÄÊı¾İÀàĞÍdtypeÓĞvariable, mptµÈ
+% ssld/base/matæ–‡ä»¶æ”¯æŒçš„æ•°æ®ç±»å‹dtypeæœ‰variable, mptç­‰
 
 if nargin == 0
     [filename, pathname] = uigetfile({'*.c;', 'Param Define Files (*.c)'},'Param Define Files');
@@ -32,7 +32,7 @@ elseif ~iscellstr(param_define_file)
 end
 
 
-%% ¶ÁÈ¡ÎÄ¼ş
+%% è¯»å–æ–‡ä»¶
 param_vars_list = {};
 for i=1:length(param_define_file)
     file = param_define_file{i};
@@ -60,7 +60,7 @@ for i=1:length(param_define_file)
     fclose(fid);
 end
 
-%% ±£´æ½á¹û
+%% ä¿å­˜ç»“æœ
 [~,name,exts] = fileparts(param_saved_file);
 if isempty(exts) && strcmpi(name, 'base')
     savetowork(param_saved_file, param_vars_list, param_csc_type)
@@ -72,7 +72,7 @@ elseif strcmpi(exts, '.txt')
     savetotext(param_saved_file, param_vars_list, param_csc_type)
 end
 
-%% Êä³öÁĞ±í
+%% è¾“å‡ºåˆ—è¡¨
 if nargout > 0
     varargout{1} = param_vars_list;
 end
@@ -86,7 +86,7 @@ for i=1:size(list,1)
 end
 
 function savetoxlsx(file, list, csc)
-sheet = {'´æ´¢ÀàĞÍ', '±äÁ¿Ãû', 'È¡Öµ', 'Êı¾İÀàĞÍ', 'Î¬¶È´óĞ¡', 'ÎïÀíµ¥Î»', '×îĞ¡È¡Öµ', '×î´óÈ¡Öµ', 'ÊÇ·ñ¸´Êı', '×¢ÊÍÃèÊö'};
+sheet = {'å­˜å‚¨ç±»å‹', 'å˜é‡å', 'å–å€¼', 'æ•°æ®ç±»å‹', 'ç»´åº¦å¤§å°', 'ç‰©ç†å•ä½', 'æœ€å°å–å€¼', 'æœ€å¤§å–å€¼', 'æ˜¯å¦å¤æ•°', 'æ³¨é‡Šæè¿°'};
 for i = 1:size(list,1)
     sheet(end+1, :) = {csc, list{i,1}, list{i,2}, list{i,3}, 1, '','','','',''};
 end

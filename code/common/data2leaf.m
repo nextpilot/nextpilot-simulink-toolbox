@@ -29,7 +29,7 @@ else
 end
 
 function shp = getshapechar(siz, ind)
-% È¥µôdimÏòÁ¿Î²²¿µÄ1
+% å»æ‰dimå‘é‡å°¾éƒ¨çš„1
 for i = length(siz):-1:1
     if siz(i) ~= 1
         break;
@@ -38,10 +38,10 @@ for i = length(siz):-1:1
     end
 end
 if isempty(siz)
-    % ±êÁ¿²»ĞèÒªÎ¬¶È
+    % æ ‡é‡ä¸éœ€è¦ç»´åº¦
     shp = '';
 else
-    % ½«Ë÷Òı×ª»»ÎªÏÂ±ê
+    % å°†ç´¢å¼•è½¬æ¢ä¸ºä¸‹æ ‡
     k = cumprod(siz);
     sub = zeros(length(siz), 1);
     for i = length(siz):-1:2
@@ -51,6 +51,6 @@ else
         ind = vi;
     end
     sub(1) = ind;
-    % ½«ÏÂ±ê×ª»»Îª×Ö·û´®
+    % å°†ä¸‹æ ‡è½¬æ¢ä¸ºå­—ç¬¦ä¸²
     shp = ['(', strjoin(arrayfun(@num2str, sub, 'UniformOutput', 0), ','), ')'];
 end

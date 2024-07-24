@@ -1,6 +1,6 @@
 function b = mix(q, v)
-% 四元素混合积
-% 物理意义，矢量a经过四元素q旋转以后，在原坐标系的坐标值b
+% 鍥涘厓绱犳贩鍚堢Н
+% 鐗╃悊鎰忎箟锛岀煝閲廰缁忚繃鍥涘厓绱爍鏃嬭浆浠ュ悗锛屽湪鍘熷潗鏍囩郴鐨勫潗鏍囧�糱
 % b=q*a*conj(q)
 % a=conj(q)*b*q
 b = q * v * conj(q);

@@ -1,7 +1,7 @@
 function n = rotate(q, v)
-% ��Ҫ�Ƚ�q��һ��
+% 需要先将q归一化
 q = normalize(q);
-% ʸ��������ת
+% 矢量坐标旋转
 r = conj(q) * v * q;
-% ��ȡ�鲿
+% 提取虚部
 n = imag(r);

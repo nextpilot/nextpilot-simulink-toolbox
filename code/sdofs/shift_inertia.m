@@ -1,9 +1,9 @@
 function I=shift_inertia(jxyz, mass, move, euler, cog)
-% jxyz Ô­×ø±êÏµµÄ¹ßĞÔ¾Ø
-% mass Ô­ÎïÌåÖÊÁ¿
-% move  Æ½ÒÆ×ø±êÊ¸Á¿
-% euler  Ğı×ªÅ·À­½Ç
-% cog  Ô­À´µÄÖØĞÄÎ»ÖÃ
+% jxyz åŸåæ ‡ç³»çš„æƒ¯æ€§çŸ©
+% mass åŸç‰©ä½“è´¨é‡
+% move  å¹³ç§»åæ ‡çŸ¢é‡
+% euler  æ—‹è½¬æ¬§æ‹‰è§’
+% cog  åŸæ¥çš„é‡å¿ƒä½ç½®
 narginchk(2,5);
 
 if nargin<5
@@ -22,16 +22,16 @@ end
 %     -Izx -Izy +Izz
 %     ];
 %
-% Ixx = ¡Òy^2+z^2 dm
-% Iyy = ¡Òx^2+z^2 dm
-% Izz = ¡Òx^2+y^2 dm
-% Ixy = Iyx = ¡Òxy dm
-% Iyz = Izy = ¡Òyz dm
-% Izx = Ixz = ¡Òzx dm
+% Ixx = âˆ«y^2+z^2 dm
+% Iyy = âˆ«x^2+z^2 dm
+% Izz = âˆ«x^2+y^2 dm
+% Ixy = Iyx = âˆ«xy dm
+% Iyz = Izy = âˆ«yz dm
+% Izx = Ixz = âˆ«zx dm
 
 I=jxyz;
 m=mass;
-%% ×ø±êÆ½ÒÆ
+%% åæ ‡å¹³ç§»
 a=move(1);b=move(2);c=move(3);
 xc=cog(1);yc=cog(2);zc=cog(3);
 ixx = (b^2+c^2) - 2*(b*yc+c*zc);
@@ -43,12 +43,12 @@ izx = c*a - (c*xc+a*zc);ixz=izx;
 I = I + [ixx,-ixy,-ixz;-iyx,iyy,-iyz;-izx,-izy,izz]*m;
 % I = I + [ixx,ixy,ixz;iyx,iyy,iyz;izx,izy,izz]*m;
 
-%% ×ø±êĞı×ª
-% ¼ÙÉèÔÚ×ø±êÏµo-xyzÖĞµÄ×ª¶¯¹ß¾ØÊÇI£¬Ã»ÓĞÒªÇóIÊÇÖ÷¹ßĞÔÖá£¬Ò²Ã»ÓĞÒªÇóI±ØĞë¹ıĞÎĞÄ
-% ÁíÍâÔ­×ø±êÏµo-xyz¾­¹ıÅ·À­Ğı×ªR£¬µÃµ½o-pqr×ø±êÏµ
-%£¨1£©ÔòÈÆ×ÅÊ¸Á¿vµÄ×ª¶¯¹ßÁ¿ÊÇ
+%% åæ ‡æ—‹è½¬
+% å‡è®¾åœ¨åæ ‡ç³»o-xyzä¸­çš„è½¬åŠ¨æƒ¯çŸ©æ˜¯Iï¼Œæ²¡æœ‰è¦æ±‚Iæ˜¯ä¸»æƒ¯æ€§è½´ï¼Œä¹Ÿæ²¡æœ‰è¦æ±‚Iå¿…é¡»è¿‡å½¢å¿ƒ
+% å¦å¤–åŸåæ ‡ç³»o-xyzç»è¿‡æ¬§æ‹‰æ—‹è½¬Rï¼Œå¾—åˆ°o-pqråæ ‡ç³»
+%ï¼ˆ1ï¼‰åˆ™ç»•ç€çŸ¢é‡vçš„è½¬åŠ¨æƒ¯é‡æ˜¯
 % v'*I*v
-%£¨2£©ÔòÔÚĞÂ×ø±êÏµµÄ×ª¶¯¹ßÁ¿ÊÇ
+%ï¼ˆ2ï¼‰åˆ™åœ¨æ–°åæ ‡ç³»çš„è½¬åŠ¨æƒ¯é‡æ˜¯
 % R*I*R'
 phi=euler(1);theta=euler(2);psi=euler(3);
 R=angle2dcm(psi,theta,phi,'zyx');

@@ -1,11 +1,11 @@
 function uint2fixdt(sldd)
 
-% 查找所有的变量
+% 鏌ユ壘鎵�鏈夌殑鍙橀噺
 hdict  = Simulink.data.dictionary.open(sldd);
 hsect  = getSection(hdict, 'Design Data');
 hentry = find(hsect);
 
-% 将所有uint64数据类型修改为fixdt(0,64,0)
+% 灏嗘墍鏈塽int64鏁版嵁绫诲瀷淇敼涓篺ixdt(0,64,0)
 k = 1;
 for i = 1:length(hentry)
     value = getValue(hentry(i));    
@@ -28,6 +28,6 @@ for i = 1:length(hentry)
     end
 end
 
-% 保存数据字典
+% 淇濆瓨鏁版嵁瀛楀吀
 saveChanges(hdict)
 close(hdict);

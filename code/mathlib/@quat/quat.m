@@ -1,9 +1,9 @@
 classdef quat
-    % ÈÆ×ÅÖá n = [cos¦Â1,cos¦Â2,cos¦Â3] Ğı×ª½Ç¶È ¦Ò£¬Ôò¹¹³ÉËÄÔªËØ
-    % q = cos(¦Ò/2) + sin(¦Ò/2)*[cos¦Â1*i + cos¦Â2*j + cos¦Â3*k]
+    % ç»•ç€è½´ n = [cosÎ²1,cosÎ²2,cosÎ²3] æ—‹è½¬è§’åº¦ Ïƒï¼Œåˆ™æ„æˆå››å…ƒç´ 
+    % q = cos(Ïƒ/2) + sin(Ïƒ/2)*[cosÎ²1*i + cosÎ²2*j + cosÎ²3*k]
     properties
-        real = 1 % Êµ²¿
-        imag = [0, 0, 0] % Ğé²¿
+        real = 1 % å®éƒ¨
+        imag = [0, 0, 0] % è™šéƒ¨
     end
 
     properties (Dependent)

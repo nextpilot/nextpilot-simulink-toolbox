@@ -2,7 +2,7 @@
 px4root = 'E:\repository\px4\pixhawk';
 
 
-%% ÌáÈ¡ËùÓĞµÄsubºÍpub
+%% æå–æ‰€æœ‰çš„subå’Œpub
 cd([px4root,'\src\modules'])
 [~,txt]=dos('dir /b/ad');
 modules = textscan(txt,'%s');
@@ -32,7 +32,7 @@ for i=1:length(modules)
     mod_sub_pub.(modules{i}).sub=sub;
 end
 mod_sub_pub=orderfields(mod_sub_pub);
-%% ½«subºÍpub½øĞĞÍ³¼Æ
+%% å°†subå’Œpubè¿›è¡Œç»Ÿè®¡
 msg_sub_pub=struct;
 for i=1:length(modules)
     for j =1:length(mod_sub_pub.(modules{i}).pub)
@@ -62,19 +62,19 @@ end
 msg_sub_pub=orderfields(msg_sub_pub);
 return
 
-%% Êä³öµ½wordÎÄµµ
+%% è¾“å‡ºåˆ°wordæ–‡æ¡£
 import mlreportgen.dom.*;
 root = Document('today','docx'); % mywordTemplate
 root.StreamOutput = true;
 root.append(TOC);
 
-% Ä£¿é¶©ÔÄºÍ·¢²¼µÄÖ÷Ìâ
-% ±êÌâ
-root.append(Heading1('Ä£¿é¶©ÔÄºÍ·¢²¼µÄÖ÷Ìâ'));
-p = Paragraph('ÏÂ±êÁĞ³öÁËËùÓĞÄ£¿é¶©ÔÄºÍ·¢²¼µÄÖ÷Ìâ');
+% æ¨¡å—è®¢é˜…å’Œå‘å¸ƒçš„ä¸»é¢˜
+% æ ‡é¢˜
+root.append(Heading1('æ¨¡å—è®¢é˜…å’Œå‘å¸ƒçš„ä¸»é¢˜'));
+p = Paragraph('ä¸‹æ ‡åˆ—å‡ºäº†æ‰€æœ‰æ¨¡å—è®¢é˜…å’Œå‘å¸ƒçš„ä¸»é¢˜');
 root.append(p);
-% ±í¸ñÄÚÈİ
-header={'Ä£¿é','¶©ÔÄ','·¢²¼'};
+% è¡¨æ ¼å†…å®¹
+header={'æ¨¡å—','è®¢é˜…','å‘å¸ƒ'};
 field=fieldnames(mod_sub_pub);
 body={};
 rf=sprintf('\n');
@@ -101,17 +101,17 @@ for i=1:length(field)
     end
     body(i,:)={field{i},sub{:},pub{:}};
 end
-t=FormalTable ({'Ö÷Ìâ','¶©ÔÄ','·¢²¼'},body);
+t=FormalTable ({'ä¸»é¢˜','è®¢é˜…','å‘å¸ƒ'},body);
 t.Border = 'single';
 root.append(t);
 
-% Ö÷ÌâµÄ·¢²¼ºÍ¶©ÔÄÄ£¿é
-% ±êÌâ
-root.append(Heading1('Ö÷Ìâ¶©ÔÄºÍ·¢²¼µÄÄ£¿é'));
-p = Paragraph('ÏÂ±êÁĞ³öÁËËùÓĞÖ÷Ìâ¶©ÔÄºÍ·¢²¼µÄÄ£¿é');
+% ä¸»é¢˜çš„å‘å¸ƒå’Œè®¢é˜…æ¨¡å—
+% æ ‡é¢˜
+root.append(Heading1('ä¸»é¢˜è®¢é˜…å’Œå‘å¸ƒçš„æ¨¡å—'));
+p = Paragraph('ä¸‹æ ‡åˆ—å‡ºäº†æ‰€æœ‰ä¸»é¢˜è®¢é˜…å’Œå‘å¸ƒçš„æ¨¡å—');
 root.append(p);
-% ±í¸ñ
-header={'Ö÷Ìâ','¶©ÔÄ','·¢²¼'};
+% è¡¨æ ¼
+header={'ä¸»é¢˜','è®¢é˜…','å‘å¸ƒ'};
 field=fieldnames(msg_sub_pub);
 body={};
 rf=sprintf('\n');
@@ -138,7 +138,7 @@ for i=1:length(field)
     end
     body(i,:)={field{i},sub{:},pub{:}};
 end
-t=FormalTable ({'Ö÷Ìâ','¶©ÔÄ','·¢²¼'},body);
+t=FormalTable ({'ä¸»é¢˜','è®¢é˜…','å‘å¸ƒ'},body);
 t.Border = 'single';
 root.append(t);
 %

@@ -1,6 +1,6 @@
 function ds = read_excel_testcase(xlsx)
 
-%% ÊäÈë²ÎÊı´¦Àí
+%% è¾“å…¥å‚æ•°å¤„ç†
 if nargin == 0
     [filename, pathname] = uigetfile({'*.xls;*.xlsx', 'Excel Files (*.xls,*xlsx)'},'Excel Files');
     if isequal(pathname, 0)
@@ -10,36 +10,36 @@ if nargin == 0
     end 
 end
 
-%% ¶ÁÈ¡excelÎÄ¼ş
+%% è¯»å–excelæ–‡ä»¶
 [data,name]=xlsread(xlsx);
 for i = 2:size(name,2)
-    % (k)£¬  Ìæ»»Îª(:,k)
-    % (i,j)£¬Ìæ»»Îª(i,j,:)
+    % (k)ï¼Œ  æ›¿æ¢ä¸º(:,k)
+    % (i,j)ï¼Œæ›¿æ¢ä¸º(i,j,:)
     temp = regexprep(name{i}, {'\((\d+)\)$','\(([\d, ]+)\)$'}, {'(:,$1)','($1,:)'});
     eval([temp ' = data(:,i);']);
 end
 
-%% ¹¹Ôìsignal
+%% æ„é€ signal
 time = data(:,1);
-% ÌáÈ¡ĞÅºÅÃû
+% æå–ä¿¡å·å
 vars =unique(regexprep(name(2:end),'\(([\d, ]+)\)$', ''));
 for i = 1:length(vars)
     if strfind(vars{i},'.')
-        % ½«ÆÕÍ¨½á¹¹Ìå×ªÎª Ê±¼äĞòÁĞ½á¹¹Ìå
+        % å°†æ™®é€šç»“æ„ä½“è½¬ä¸º æ—¶é—´åºåˆ—ç»“æ„ä½“
         eval(sprintf( '%s = timeseries(%s,time);',vars{i}, vars{i}))
     else
-        % ÆÕÍ¨Êı×éÒ²×ªÎª Ê±¼äĞòÁĞ£¬µ±È»Ò²¿ÉÒÔÆäËüºÏ·¨µÄÑùÊ½
+        % æ™®é€šæ•°ç»„ä¹Ÿè½¬ä¸º æ—¶é—´åºåˆ—ï¼Œå½“ç„¶ä¹Ÿå¯ä»¥å…¶å®ƒåˆæ³•çš„æ ·å¼
         eval(sprintf( '%s = timeseries(%s,time);',vars{i}, vars{i}))
     end
 end
 
-%% ¹¹Ôìdataset 
-% ÌáÈ¡½Ó¿ÚÃû
+%% æ„é€ dataset 
+% æå–æ¥å£å
 prts = unique(regexpi(name(2:end),'^([\w\d_]+)','match','once'),'stable');
-% ´´½¨dataset
+% åˆ›å»ºdataset
 ds = Simulink.SimulationData.Dataset;
 for i = 1:length(prts)
-    % ds.addElement(sig, name); % ²»ÍÆ¼öaddElement
+    % ds.addElement(sig, name); % ä¸æ¨èaddElement
     ds{i} = eval(prts{i});
     ds{i}.Name = prts{i};
 end
@@ -47,12 +47,12 @@ end
 % inp = Simulink.SimulationInput('sl_test_demo');
 % inp.ExternalInput = ds;
 % out= sim(inp);
-%% ¶à´ÎÅÜÍ¬Ò»¸öÄ£ĞÍ
+%% å¤šæ¬¡è·‘åŒä¸€ä¸ªæ¨¡å‹
 % in = Simulink.SimulationInput(bdroot);
 % in.ExternalInput = ds;
 % out = sim(in)
 
-%% ´óÊı¾İ·ÂÕæ
+%% å¤§æ•°æ®ä»¿çœŸ
 % sim(mdl1,'LoggingToFile','on','LoggingFileName','data1.mat');
 % sim(mdl2,'LoggingToFile','on','LoggingFileName','data2.mat');
 %

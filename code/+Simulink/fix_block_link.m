@@ -1,7 +1,7 @@
 function fix_block_link(varargin)
-% fixblocklink()，查找当前model中unsolve link，并尝试根据SourceType进行修复
-% fixblocklink(sys)，查找sys模型中unsolve link，并尝试根据SourceType进行修复
-% fixblocklink(oldpath，newpath)，查找当前模型包含oldpath的unsolve link，然后用newpath进行修复
+% fixblocklink()锛屾煡鎵惧綋鍓峬odel涓璾nsolve link锛屽苟灏濊瘯鏍规嵁SourceType杩涜淇
+% fixblocklink(sys)锛屾煡鎵緎ys妯″瀷涓璾nsolve link锛屽苟灏濊瘯鏍规嵁SourceType杩涜淇
+% fixblocklink(oldpath锛宯ewpath)锛屾煡鎵惧綋鍓嶆ā鍨嬪寘鍚玱ldpath鐨剈nsolve link锛岀劧鍚庣敤newpath杩涜淇
 % fixblocklink(sys, oldpath, newpath)
 
 % BlockType    = reference

@@ -1,7 +1,7 @@
 function genexceltest
 
 sys = bdroot;
-%% 编译模型
+%% 缂栬瘧妯″瀷
 warning('off','Simulink:Engine:ModelAlreadyCompiled')
 feval(sys,[],[],[],'compile');
 warning('on','Simulink:Engine:ModelAlreadyCompiled')
@@ -23,7 +23,7 @@ data(end+1:end+4,1:2) = {
     };
 
 
-%% 处理输入接口
+%% 澶勭悊杈撳叆鎺ュ彛
 data{end+2,1} = '#input';
 
 col = 2;

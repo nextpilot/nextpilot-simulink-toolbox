@@ -12,7 +12,7 @@ tree =xmlread(xml_file);
 mavlink.version=char(tree.getElementsByTagName('version').item(0).getTextContent);
 mavlink.dialect=char(tree.getElementsByTagName('dialect').item(0).getTextContent);
 
-% 处理枚举类型
+% 澶勭悊鏋氫妇绫诲瀷
 enum_root = tree.getElementsByTagName('enums');
 enum_list = enum_root.item(0).getChildNodes;
 for i = 0 : enum_list.getLength-1
@@ -56,7 +56,7 @@ for i = 0 : enum_list.getLength-1
 end
 
 
-% 处理消息类型
+% 澶勭悊娑堟伅绫诲瀷
 msgs_root = tree.getElementsByTagName('messages');
 msgs_list = msgs_root.item(0).getChildNodes;
 for i = 0 : enum_list.getLength-1
@@ -102,7 +102,7 @@ else
 end
 sobj = getSection(dobj,'Design Data');
 
-% 处理枚举类型
+% 澶勭悊鏋氫妇绫诲瀷
 enumera=mavlink.enumera;
 field=fieldnames(enumera);
 p=Simulink.Parameter();
@@ -133,7 +133,7 @@ for i=1:length(field)
     assignin(sobj, name,nobj);
 end
 
-%% 处理总线类型
+%% 澶勭悊鎬荤嚎绫诲瀷
 bobj_mav = Simulink.Bus;
 eobj_mav(9) = Simulink.BusElement;
 eobj_mav(1).Name = 'stx'; eobj_mav(1).DataType='uint8';

@@ -1,7 +1,7 @@
 function varargout = read_excel_struct(xlsx,sldd,varargin)
 
 
-%% ÊäÈë²ÎÊı´¦Àí
+%% è¾“å…¥å‚æ•°å¤„ç†
 if nargin == 0
     [filename, pathname] = uigetfile({'*.xls;*.xlsx', 'Excel Files (*.xls,*xlsx)'},'Excel Files');
     if isequal(pathname, 0)
@@ -11,8 +11,8 @@ if nargin == 0
     end
 end
 
-%% ¶ÁÈ¡excelÎÄ¼ş
-% ÉèÖÃsheetÊôĞÔ
+%% è¯»å–excelæ–‡ä»¶
+% è®¾ç½®sheetå±æ€§
 % opts = detectImportOptions(file,'Sheet','struct');
 opts = matlab.io.spreadsheet.SpreadsheetImportOptions;
 opts.Sheet              = 'struct';
@@ -26,13 +26,13 @@ settings = {
     };
 opts.VariableNames               = settings(1,:);
 opts.VariableTypes               = settings(2,:);
-% Ò²¿ÉÒÔÊ¹ÓÃsetvaropts
+% ä¹Ÿå¯ä»¥ä½¿ç”¨setvaropts
 [opts.VariableOptions.FillValue] = settings{3,:};
 
-% ¶ÁÈ¡excelÄÚÈİĞ´Èësldd
+% è¯»å–excelå†…å®¹å†™å…¥sldd
 t = readtable(xlsx,opts);
 
-% É¾³ı¿ÕĞĞºÍ×¢ÊÍĞĞ
+% åˆ é™¤ç©ºè¡Œå’Œæ³¨é‡Šè¡Œ
 for i = size(t,1):-1:1
     if isempty(t.Name{i}) || t.Name{i}(1)=='#'
         t(i,:)=[];
@@ -41,7 +41,7 @@ end
 
 list = table2cell(t);
 
-%% ÆÊÎöbusÃû×Ö
+%% å‰–æbusåå­—
 head = list(:,1);
 parts = cellfun(@(s)strsplit(s,'.'), head, 'UniformOutput', 0);
 ndeep = cellfun(@length, parts);
@@ -49,7 +49,7 @@ ndeep = cellfun(@length, parts);
 nrow = length(head);
 ncol = max(ndeep);
 
-% ³õÊ¼»¯cell
+% åˆå§‹åŒ–cell
 head_elm_name(1:nrow,1:ncol) = {''};
 head_elm_dims(1:nrow,1:ncol) = {[1 1]};
 head_elm_kind(1:nrow,1:ncol) = {false};
@@ -60,18 +60,18 @@ for i = 1 : nrow
     t = parts{i};
     for j = 1 : k
         token = regexpi(t{j},'(\w+)(\[[\d,\s]+\])*','tokens','once');
-        % ±äÁ¿Ãû
+        % å˜é‡å
         head_elm_name{i,j} = token{1};
-        % ±äÁ¿Î¬¶È
+        % å˜é‡ç»´åº¦
         if ~isempty(token{2})
             head_elm_dims{i,j} = eval(token{2});
         end
-        % ÊÇ·ñÎª½Úµã
+        % æ˜¯å¦ä¸ºèŠ‚ç‚¹
         if j < k
             head_elm_kind{i,j} = true;
         end
     end
-    % ¹¹ÔìbusÃû×Ö
+    % æ„é€ busåå­—
     for j = 1 : k-1
         if j == 1
             head_bus_name{i,j} = head_elm_name{i,j};
@@ -82,7 +82,7 @@ for i = 1 : nrow
 end
 
 
-%% ´´½¨×ÜÏßcell
+%% åˆ›å»ºæ€»çº¿cell
 bus = {};
 for ideep = 1 : ncol-1
     bus_name_list = unique(head_bus_name(:,ideep),'stable');
@@ -90,7 +90,7 @@ for ideep = 1 : ncol-1
         if isempty(bus_name_list{jbus})
             continue
         end
-        % ´´½¨bus
+        % åˆ›å»ºbus
         bus{end+1} = {
             bus_name_list{jbus} % Name
             ''         % HeaderFile
@@ -100,7 +100,7 @@ for ideep = 1 : ncol-1
             {}
             };
         
-        % ´´½¨elem
+        % åˆ›å»ºelem
         flag = strcmpi(head_bus_name(:, ideep), bus_name_list{jbus});
         [elem, eidx] = unique(head_elm_name(flag, ideep+1), 'stable');
         locs = find(flag);
@@ -143,10 +143,10 @@ for ideep = 1 : ncol-1
     end
 end
 
-%% ½«cell×ª»»Îª×ÜÏß¶ÔÏó
+%% å°†cellè½¬æ¢ä¸ºæ€»çº¿å¯¹è±¡
 [value, name] = nextpilot.simulink.cell2bus(bus);
 
-%% ±£´æµ½slddÎÄ¼ş
+%% ä¿å­˜åˆ°slddæ–‡ä»¶
 if nargin > 1 && ~isempty(sldd)
     nextpilot.simulink.saveas(sldd, name, value)
 end

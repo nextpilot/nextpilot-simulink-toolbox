@@ -5,7 +5,7 @@ function sl_customization(cm)
 cm.addCustomMenuFcn('Simulink:MenuBar', @item_addto_menubar);
 cm.addCustomMenuFcn('Stateflow:MenuBar', @item_addto_menubar);
 
-% ²Ëµ¥ÓĞÒÔÏÂÈıÖÖ
+% èœå•æœ‰ä»¥ä¸‹ä¸‰ç§
 % sl_container_schema
 % sl_action_schema
 % sl_toggle_schema

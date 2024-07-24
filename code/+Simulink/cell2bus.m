@@ -40,14 +40,14 @@ name{nbus, 1} = '';
 for i = 1:length(c)
     if ~isempty(c{i})
         name{i} = c{i}{1};
-        % ÉèÖÃbusÊôÐÔ
+        % è®¾ç½®buså±žæ€§
         value{i} = Simulink.Bus;
         for j = 1:4
             if ~isempty(c{i}{j+1})
                 try value{i}.(busprop{j}) = c{i}{j+1}; end
             end
         end
-        % Ìí¼Óelem
+        % æ·»åŠ elem
         nelem = length(c{i}{6});        
         for j = 1:nelem
             for k = 1:11

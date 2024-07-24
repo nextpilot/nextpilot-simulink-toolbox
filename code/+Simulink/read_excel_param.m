@@ -1,6 +1,6 @@
 function varargout = read_excel_param(xlsx, sldd, varargin)
 
-%% ÊäÈë²ÎÊý´¦Àí
+%% è¾“å…¥å‚æ•°å¤„ç†
 if nargin == 0
     [filename, pathname] = uigetfile({'*.xls;*.xlsx', 'Excel Files (*.xls,*xlsx)'},'Excel Files');
     if isequal(pathname, 0)
@@ -10,8 +10,8 @@ if nargin == 0
     end
 end
 
-%% ¶ÁÈ¡excelÎÄ¼þ
-% ÉèÖÃsheetÊôÐÔ
+%% è¯»å–excelæ–‡ä»¶
+% è®¾ç½®sheetå±žæ€§
 % opts = detectImportOptions(file,'Sheet','struct');
 opts = matlab.io.spreadsheet.SpreadsheetImportOptions;
 opts.Sheet              = 'param';
@@ -24,20 +24,20 @@ settings = {
     };
 opts.VariableNames               = settings(1,:);
 opts.VariableTypes               = settings(2,:);
-% Ò²¿ÉÒÔÊ¹ÓÃsetvaropts
+% ä¹Ÿå¯ä»¥ä½¿ç”¨setvaropts
 [opts.VariableOptions.FillValue] = settings{3,:};
 
-% ¶ÁÈ¡excelÄÚÈÝÐ´Èësldd
+% è¯»å–excelå†…å®¹å†™å…¥sldd
 t = readtable(xlsx,opts);
 
-% É¾³ý¿ÕÐÐºÍ×¢ÊÍÐÐ
+% åˆ é™¤ç©ºè¡Œå’Œæ³¨é‡Šè¡Œ
 for i = size(t,1):-1:1
     if isempty(t.CSCType{i}) || t.CSCType{i}(1)=='#'
         t(i,:)=[];
     end
 end
 
-%% ´´½¨param¶ÔÏó
+%% åˆ›å»ºparamå¯¹è±¡
 name = t.Name;
 value = cell(size(t,1),1);
 for i = 1:size(t,1)
@@ -45,7 +45,7 @@ for i = 1:size(t,1)
 end
 
 
-%% ±£´æµ½slddÎÄ¼þ
+%% ä¿å­˜åˆ°slddæ–‡ä»¶
 if nargin > 1 && ~isempty(sldd)
     nextpilot.simulink.saveas(sldd, name, value);
 end

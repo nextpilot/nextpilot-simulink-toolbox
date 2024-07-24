@@ -1,5 +1,5 @@
 function debug(ss)
-% 请在stateflow中调用该函数
+% 璇峰湪stateflow涓皟鐢ㄨ鍑芥暟
 
 persistent t0 ii jj
 if isempty(t0)

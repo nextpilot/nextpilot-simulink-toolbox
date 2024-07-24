@@ -1,3 +1,3 @@
 function q = ctranspose(q)
-% ¹²éîËÄÔªËØ
+% åƒ•æ¿ä¾å•‹åŒ¼
 q = conj(q);

@@ -1,11 +1,11 @@
 function r = ang2dcm(varargin)
-% ang2dcm ¸ù¾İÈÆXYZÖáĞı×ª½Ç´´½¨·½ÏòÓàÏÒ¾ØÕó
+% ang2dcm æ ¹æ®ç»•XYZè½´æ—‹è½¬è§’åˆ›å»ºæ–¹å‘ä½™å¼¦çŸ©é˜µ
 %
 % dcm = ang2dcm(r1,r2,r3,...,'xyz...')
 % dcm = ang2dcm([r1, r2, ...], 'xyz...')
-% ÆäÖĞ: 
-%    r1, r2, r3, ÊÇĞı×ª½Ç¶È£¨»¡¶È»òsym·ûºÅ£©
-%    'xyz...'£¬ÊÇÃ¿´ÎĞı×ªµÄÖá£¬ÊÇxyzµÄ×éºÏ
+% å…¶ä¸­: 
+%    r1, r2, r3, æ˜¯æ—‹è½¬è§’åº¦ï¼ˆå¼§åº¦æˆ–symç¬¦å·ï¼‰
+%    'xyz...'ï¼Œæ˜¯æ¯æ¬¡æ—‹è½¬çš„è½´ï¼Œæ˜¯xyzçš„ç»„åˆ
 %
 % Examples:
 %
@@ -13,21 +13,21 @@ function r = ang2dcm(varargin)
 %  yaw = 0.7; pitch = 0.2; roll = 0.6;
 %  dcm = ang2dcm(yaw, pitch, roll, 'zyx')
 %
-%  Ê¹ÓÃsym·ûºÅÔËËã£¬½øĞĞ¹«Ê½ÍÆµ¼
+%  ä½¿ç”¨symç¬¦å·è¿ç®—ï¼Œè¿›è¡Œå…¬å¼æ¨å¯¼
 %  syms yaw pitch roll real
 %  dcm = ang2dcm(yaw, pitch, roll, 'zyx')
 %
 % See also ang2quat
 
 if nargin < 2
-    error('ang2dcm:inputerror', 'ÖÁÉÙ°üº¬Á½¸öÊäÈë²ÎÊı£¡');
+    error('ang2dcm:inputerror', 'è‡³å°‘åŒ…å«ä¸¤ä¸ªè¾“å…¥å‚æ•°ï¼');
 else
     ang = cell2vector(varargin(1:end-1));
     act = varargin{end};
 end
 
 if length(ang) ~= length(act)
-    warning('ang2dcm:lengtherror', 'ÊäÈë½Ç¶ÈºÍ×ªÖá³¤¶È²»Ò»ÖÂ£¡');
+    warning('ang2dcm:lengtherror', 'è¾“å…¥è§’åº¦å’Œè½¬è½´é•¿åº¦ä¸ä¸€è‡´ï¼');
 end
 n = min(length(ang), length(act));
 

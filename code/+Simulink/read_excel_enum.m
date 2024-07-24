@@ -1,6 +1,6 @@
 function varargout = read_excel_enum(xlsx,sldd,varargin)
 
-%% ÊäÈë²ÎÊý´¦Àí
+%% è¾“å…¥å‚æ•°å¤„ç†
 if nargin == 0
     [filename, pathname] = uigetfile({'*.xls;*.xlsx', 'Excel Files (*.xls,*xlsx)'},'Excel Files');
     if isequal(pathname, 0)
@@ -10,7 +10,7 @@ if nargin == 0
     end
 end
 
-%% ¶ÁÈ¡excelÎÄ¼þ
+%% è¯»å–excelæ–‡ä»¶
 opts = matlab.io.spreadsheet.SpreadsheetImportOptions;
 opts.Sheet              = 'enum';
 opts.DataRange          = 'A2';
@@ -23,25 +23,25 @@ settings = {
     };
 opts.VariableNames               = settings(1,:);
 opts.VariableTypes               = settings(2,:);
-% Ò²¿ÉÒÔÊ¹ÓÃsetvaropts
+% ä¹Ÿå¯ä»¥ä½¿ç”¨setvaropts
 [opts.VariableOptions.FillValue] = settings{3,:};
 
 t = readtable(xlsx, opts);
 
-% É¾³ý¿ÕÐÐºÍ×¢ÊÍÐÐ
+% åˆ é™¤ç©ºè¡Œå’Œæ³¨é‡Šè¡Œ
 for i = size(t,1):-1:1
     if isempty(t.Name{i}) || t.Name{i}(1)=='#'
         t(i,:)=[];
     end
 end
 
-% ´´½¨½á¹¹Ìå
+% åˆ›å»ºç»“æž„ä½“
 % for i=1:size(t,1)
 %     cmd = ['s.', t.Name{i}, '= t(i,:);'];
 %     eval(cmd);
 % end
 
-%% ´´½¨Ã¶¾Ùcell
+%% åˆ›å»ºæžšä¸¾cell
 temp = cellfun(@(s)strsplit(s,'.'), t.Name,'UniformOutput', 0);
 for i = 1:length(temp)
     if length(temp{i}) == 1
@@ -81,9 +81,9 @@ for i = 1 : length(group)
         };
 end
 
-%% ½«cell×ª»»ÎªÃ¶¾Ù¶ÔÏó
+%% å°†cellè½¬æ¢ä¸ºæžšä¸¾å¯¹è±¡
 [value, name] = nextpilot.simulink.cell2enum(enum);
-% Í¬Ê±½«Ã¶¾ÙÀàÐÍ×ª»¯Îªdefine
+% åŒæ—¶å°†æžšä¸¾ç±»åž‹è½¬åŒ–ä¸ºdefine
 for i = 1:length(enum)*0
     dtype = nextpilot.simulink.get_best_inttype(enum{i}{8}{1}{2},enum{i}{8}{end}{2});
     for j = 1 : length(enum{i}{8})
@@ -100,7 +100,7 @@ for i = 1:length(enum)*0
     end
 end
 
-%% ±£´æµ½slddÎÄ¼þ
+%% ä¿å­˜åˆ°slddæ–‡ä»¶
 if nargin > 1 && ~isempty(sldd)
     nextpilot.simulink.saveas(sldd, name, value)
 end

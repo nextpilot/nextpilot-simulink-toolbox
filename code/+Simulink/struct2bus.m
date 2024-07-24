@@ -1,7 +1,7 @@
 function [buses,names] = struct2bus(value,varargin)
 % struct2busobject(value, file, group, buses, names)
 
-%% ÊäÈë²ÎÊı´¦Àí
+%% è¾“å…¥å‚æ•°å¤„ç†
 p = inputParser;
 p.addRequired('value');
 p.addOptional('file', 'none', @ischar);
@@ -15,9 +15,9 @@ group = p.Results.group;
 buses = p.Results.buses;
 names = p.Results.names;
 
-%% ´´½¨bus¶ÔÏó
+%% åˆ›å»ºbuså¯¹è±¡
 if isstruct(value)    
-    % ´´½¨¸¸bus
+    % åˆ›å»ºçˆ¶bus
     buses(end+1) = Simulink.Bus;
     names{end+1} = group;    
     field        = fieldnames(value);
@@ -29,7 +29,7 @@ if isstruct(value)
             buses(end).Elements(i) = createElement(data,field{i});
         end
     end    
-    % ´´½¨×Óbus
+    % åˆ›å»ºå­bus
     for i = 1:length(field)        
         data = value.(field{i});
         if isstruct(data)
@@ -41,7 +41,7 @@ else
     
 end
 
-%% ±£´æbus¶ÔÏó
+%% ä¿å­˜buså¯¹è±¡
 [~,~,ext] = fileparts(file);
 if strcmpi(file,'base') ||  strcmpi(file,'caller')
     for i = 1:length(names)
@@ -101,7 +101,7 @@ elseif isnumeric(value)
     eobj.DataType          = class(value);
     eobj.Dimensions        = size(value);
 else
-    disp('ÎŞ·¨Ê¶±ğµÄÊı¾İÀàĞÍ');
+    disp('æ— æ³•è¯†åˆ«çš„æ•°æ®ç±»å‹');
 end
 
 

@@ -1,4 +1,4 @@
 function r = getpkgdir()
-% windows¿ÉÒÔÊ¹ÓÃRTW.TransformPaths¶ÔÂ·¾¶½øĞĞ×ª»»
+% windowså¯ä»¥ä½¿ç”¨RTW.TransformPathså¯¹è·¯å¾„è¿›è¡Œè½¬æ¢
 
 r = strtok(fileparts(mfilename('fullpath')+".m"),'+');

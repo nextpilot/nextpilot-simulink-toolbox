@@ -1,8 +1,8 @@
 function varargout = import_uorb_message(msg_files, save_files)
 % import_uorb_message(msg_define_file, msg_save_file)
 %
-% msg_files:  uorbÏûÏ¢ÎÄ¼ş£¬Ö§³Öcellstr£¬char£¬string£¬string arrayµÈ£¬×Ö·û´®ÖĞ¿ÉÒÔÓĞÍ¨Åä·û
-% save_files: ½á¹û±£´æÎÄ¼ş£¬Ö§³Ösldd£¬xlsxÎÄ¼ş¸ñÊ½
+% msg_files:  uorbæ¶ˆæ¯æ–‡ä»¶ï¼Œæ”¯æŒcellstrï¼Œcharï¼Œstringï¼Œstring arrayç­‰ï¼Œå­—ç¬¦ä¸²ä¸­å¯ä»¥æœ‰é€šé…ç¬¦
+% save_files: ç»“æœä¿å­˜æ–‡ä»¶ï¼Œæ”¯æŒslddï¼Œxlsxæ–‡ä»¶æ ¼å¼
 %
 % Examples
 %
@@ -11,11 +11,11 @@ function varargout = import_uorb_message(msg_files, save_files)
 %   msg = 'msg\**\*msg'
 %   msg = {'msg\commander_state.msg', 'msg\*.msg', 'msg\**\*msg'}
 %
-% ²ÉÓÃ Simulink.importExternalCTypes º¯ÊıÄÜ×ª»»³£¹æ C/C++ Êı¾İÀà
+% é‡‡ç”¨ Simulink.importExternalCTypes å‡½æ•°èƒ½è½¬æ¢å¸¸è§„ C/C++ æ•°æ®ç±»
 
 
 
-%% ²ÎÊı´¦Àí
+%% å‚æ•°å¤„ç†
 if isempty(msg_files)
     [filename, pathname] = uigetfile({'*.msg', 'uORB Msg Files (*.msg)'},'uORB Msg Files');
     if isequal(pathname, 0)
@@ -25,14 +25,14 @@ if isempty(msg_files)
     end
 end
 
-% ½«charºÍstring×ªÎªcell
+% å°†charå’Œstringè½¬ä¸ºcell
 if ischar(msg_files)
     msg_files={msg_files};
 elseif isstring(msg_files)
     msg_files = cellstr(msg_files);
 end
 
-%% ¶ÁÈ¡ÎÄ¼ş
+%% è¯»å–æ–‡ä»¶
 msg_vars_list.bus ={};
 msg_vars_list.enum={};
 idx = 0;
@@ -62,7 +62,7 @@ for i=1:length(msg_files)
     end
 end
 
-%% ±£´æÊı¾İ
+%% ä¿å­˜æ•°æ®
 [~,name,exts] = fileparts(save_files);
 if isempty(exts) && strcmpi(name,'base')
     savetobase(save_files, msg_vars_list)
@@ -71,7 +71,7 @@ elseif strcmpi(exts, '.sldd')
 end
 
 
-%% Êä³öÁĞ±í
+%% è¾“å‡ºåˆ—è¡¨
 if nargout>0
     varargout{1} = msg_vars_list;
 end
@@ -85,7 +85,7 @@ enum.file = file; enum.name={name}; enum.elem =[];
 
 fid=fopen(file);
 while ~feof(fid)
-    % Ìø¹ı¿ÕĞĞ»òÕß×¢ÊÍĞĞ
+    % è·³è¿‡ç©ºè¡Œæˆ–è€…æ³¨é‡Šè¡Œ
     tline = strtrim(fgetl(fid));
     if isempty(tline)
         continue
@@ -95,12 +95,12 @@ while ~feof(fid)
     elseif startsWith(tline ,'#')
         continue;
     end
-    % ²ğ·Ö×¢ÊÍºÍ¶¨Òå
+    % æ‹†åˆ†æ³¨é‡Šå’Œå®šä¹‰
     tokens = regexpi(tline,'([^#]+)(.*)','tokens','once');
     left = tokens{1};
     rght = tokens{2};
     if contains(left,'=')
-        % Ã¶¾ÙÀàĞÍ
+        % æšä¸¾ç±»å‹
         % uint8 AIRSPD_MODE_MEAS = 0	# airspeed is measured airspeed from sensor
         tok = regexpi(left, '(\w+)\s+(\w+)\s*=\s*([-\d]+)','tokens','once');
         enum.elem(end+1).name = tok{2};
@@ -108,7 +108,7 @@ while ~feof(fid)
         enum.elem(end).value = str2num(tok{3});
         enum.elem(end).comment=rght;
     else
-        % ½á¹¹ÌåÀàĞÍ
+        % ç»“æ„ä½“ç±»å‹
         % float32[3] vel_variance	# Variance in body velocity estimate
         tok=regexpi(tline,'(\w+)(\[\d+\])*\s+(\w+)','tokens','once');
         bus.elem(end+1).name = tok{3};
@@ -129,12 +129,12 @@ function [elem, enum] = read_msg_header(file)
 bus.file = file;  bus.name={name};  bus.elem = [];
 enum.file = file; enum.name={name}; enum.elem =[];
 
-% ´ò¿ªÎÄ¼ş
+% æ‰“å¼€æ–‡ä»¶
 fid=fopen(file);
 fskip(fid, 'struct __EXPORT');
 fskip(fid, 3);
 
-% ¶ÁÈ¡½á¹¹Ìå
+% è¯»å–ç»“æ„ä½“
 while ~feof(fid)
     tline = strtrim(fgetl(fid));
     if isempty(tline)
@@ -155,7 +155,7 @@ while ~feof(fid)
 
 end
 
-% ¶ÁÈ¡Ã¶¾Ù
+% è¯»å–æšä¸¾
 while ~feof(fid)
     tline = strtrim(fgetl(fid));
     if isempty(tline)
@@ -170,7 +170,7 @@ while ~feof(fid)
     enum.elem(end).value=tokens{3};
     enum.elem(end).comment='';
 end
-% ¹Ø±ÕÎÄ¼ş
+% å…³é—­æ–‡ä»¶
 fclose(fid);
 
 
@@ -197,7 +197,7 @@ for i = 1:length(list.bus)
     end
 end
 
-% ¶¨ÒåÃ¶¾ÙÀàĞÍ
+% å®šä¹‰æšä¸¾ç±»å‹
 for i = 1:length(list.enum)
     enum=list.enum{i};
     if isempty(enum)
@@ -212,7 +212,7 @@ end
 
 %%
 function savetosldd(sldd, list)
-% ´ò¿ªssldÎÄ¼ş
+% æ‰“å¼€ssldæ–‡ä»¶
 if exist(sldd,'file')
     dobj=Simulink.data.dictionary.open(sldd);
 else
@@ -220,7 +220,7 @@ else
 end
 sobj = getSection(dobj,'Design Data');
 
-% ¶¨Òå×ÜÏßÀàĞÍ
+% å®šä¹‰æ€»çº¿ç±»å‹
 for i = 1:length(list.bus)
     bus = list.bus{i};
     if isempty(bus)
@@ -244,14 +244,14 @@ for i = 1:length(list.bus)
     end
 end
 
-% ¶¨ÒåÃ¶¾ÙÀàĞÍ
+% å®šä¹‰æšä¸¾ç±»å‹
 for i = 1:length( list.enum)
     enum = list.enum{i};
     if isempty(enum)
         continue;
     end
 
-    % ½«Ã¶¾ÙÏî¶¨ÒåÎª²ÎÊı
+    % å°†æšä¸¾é¡¹å®šä¹‰ä¸ºå‚æ•°
     p = Simulink.Parameter();
     p.CoderInfo.StorageClass       = 'Custom';
     p.CoderInfo.CustomStorageClass = 'Const';
@@ -260,9 +260,9 @@ for i = 1:length( list.enum)
     nobj = Simulink.data.dictionary.EnumTypeDefinition;
     nobj.AddClassNameToEnumNames = true;
     for j=1:length(enum.elem)
-        % Ôö¼ÓÃ¶¾ÙÏî
+        % å¢åŠ æšä¸¾é¡¹
         appendEnumeral(nobj,enum.elem(j).name,enum.elem(j).value, enum.elem(j).comment);
-        % ±£´æÎª²ÎÊı
+        % ä¿å­˜ä¸ºå‚æ•°
         p.Value=[];
         set(p,{'DataType','Value','Description'},{getdatatype(enum.elem(j).type), enum.elem(j).value, enum.elem(j).comment});
         assignin(sobj, upper(enum.elem(j).name), p);
@@ -271,6 +271,6 @@ for i = 1:length( list.enum)
     assignin(sobj,name,nobj);
 end
 
-% ±£´æslddÎÄ¼ş
+% ä¿å­˜slddæ–‡ä»¶
 saveChanges(dobj);
 close(dobj);
