@@ -1,1 +1,0 @@
-function bin2dec
