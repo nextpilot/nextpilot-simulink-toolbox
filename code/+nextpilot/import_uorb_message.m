@@ -42,7 +42,7 @@ msg_vars_list.bus ={};
 msg_vars_list.enum={};
 idx = 0;
 
-for i=1:length(msg_files)
+for i = 1:length(msg_files)
     % fprintf('[%d/%d] %s\n',i,length(msg_files),msg_files{i});
     list = dir(msg_files{i});
     for j = 1:length(list)
@@ -59,10 +59,10 @@ for i=1:length(msg_files)
             [bus, enum] = read_msg_define(file);
         end
         if ~isempty(bus.elem)
-            msg_vars_list.bus{end+1}=bus;
+            msg_vars_list.bus{end+1} = bus;
         end
         if ~isempty(enum.elem)
-            msg_vars_list.enum{end+1}=enum;
+            msg_vars_list.enum{end+1} = enum;
         end
     end
 end
