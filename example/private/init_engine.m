@@ -40,3 +40,5 @@ eng_perf2 = [
     ];
 engine.torque.delta  = eng_perf2(:,1);
 engine.torque.moment = eng_perf2(:,3);
+
+clear eng_perf1 eng_perf2

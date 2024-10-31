@@ -44,3 +44,5 @@ motor.thrust.force = mc_perf(:,3);
 % 扭矩曲线
 motor.torque.delta  = mc_perf(:,1);
 motor.torque.moment = mc_perf(:,7);
+
+clear A R mc_perf

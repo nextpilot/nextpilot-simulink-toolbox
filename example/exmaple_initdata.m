@@ -7,10 +7,10 @@ plant.init.phi_theta_psi = [0,0,0];
 plant.init.p_q_r         = [0 0 0];
 
 %% 发动机
-engine;
+init_engine;
 
 %% 旋翼动力
-motor;
+init_motor;
 
 %% 气动数据
-aerody;
+init_aerody;
